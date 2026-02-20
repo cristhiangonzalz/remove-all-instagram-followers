@@ -33,12 +33,15 @@ public class Main {
         unfollow.setBounds(10, 40, 200, 25);
         panel.add(unfollow);
         unfollow.addActionListener(n -> {
-            ingresarDatos(panel);
+            ingresarDatos(panel, 1);
         });
 
         JButton removeFollowers = new JButton("Eliminar seguidores");
         removeFollowers.setBounds(10, 70, 200, 25);
         panel.add(removeFollowers);
+        removeFollowers.addActionListener(l -> {
+            ingresarDatos(panel, 2);
+        });
 
         JButton closeWindow = new JButton("Salir");
         closeWindow.setBounds(10, 100, 200, 25);
@@ -50,7 +53,7 @@ public class Main {
         panel.updateUI();
     }
 
-    private static void ingresarDatos(JPanel panel) {
+    private static void ingresarDatos(JPanel panel, int option) {
 
         panel.removeAll();
         panel.setLayout(null);
@@ -80,11 +83,19 @@ public class Main {
             }
             String cleanUsername = usernameText.getText().trim();
             Unfollow unfollow = new Unfollow();
-            unfollow.login(cleanUsername, passwordText.getText().trim());
-            unfollow.goToProfile();
-            unfollow.openFollowing(cleanUsername);
-            unfollow.getNumberOfFollowing();
-            unfollow.unfollow();
+            if (option == 1) {
+                unfollow.login(cleanUsername, passwordText.getText().trim());
+                unfollow.goToProfile();
+                unfollow.openFollowing(cleanUsername);
+                unfollow.unfollow();
+            } else {
+                RemoveFollowers removeFollowers = new RemoveFollowers();
+                unfollow.login(cleanUsername, passwordText.getText().trim());
+                unfollow.goToProfile();
+                removeFollowers.openFollowing();
+                removeFollowers.unfollow();
+            }
+
         });
 
         JButton cancelButton = new JButton("Cancel");

@@ -10,7 +10,9 @@ import java.time.Duration;
 
 public class RemoveFollowers {
 
+    public RemoveFollowers(){}
 
+    private final WebDriver driver = new ChromeDriver();
 
 //        if (!username.isBlank()) {
 //            WebDriver driver = new ChromeDriver();
@@ -22,16 +24,14 @@ public class RemoveFollowers {
 //        }
 
 
-
-
-    private static int getNumberOfFollowing(WebDriver driver) {
+    private int getNumberOfFollowing() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li//a//span[text()=' followers']/span")));
         assert element != null;
         return Integer.parseInt(element.getText());
     }
 
-    private static void openFollowing(WebDriver driver, String username) {
+    public void openFollowing() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement following = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()=' followers']/ancestor::a")));
         assert following != null;
@@ -39,7 +39,8 @@ public class RemoveFollowers {
 
     }
 
-    private static void unfollow(WebDriver driver, int following) {
+    public void unfollow() {
+        int following = getNumberOfFollowing();
         int contador = 0;
         for (int i = 1; i <= following; i++) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
@@ -60,18 +61,18 @@ public class RemoveFollowers {
                 assert confirmUnfollow != null;
                 confirmUnfollow.click();
                 contador++;
-            } catch (TimeoutException e) {
+            } catch (TimeoutException ignored) {
 
             }
 
             if (contador >= 10) {
-                scroll(driver);
+                scroll();
                 contador = 0;
             }
         }
     }
 
-    private static void scroll(WebDriver driver) {
+    private void scroll() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         WebElement dialog = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='x6nl9eh x1a5l9x9 x7vuprf x1mg3h75 x1lliihq x1iyjqo2 xs83m0k xz65tgg x1rife3k x1n2onr6']")));
 

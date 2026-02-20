@@ -12,7 +12,7 @@ public class Unfollow {
     public Unfollow() {
     }
 
-    private WebDriver driver = new ChromeDriver();
+    private final WebDriver driver = new ChromeDriver();
 
     public void login(String username, String pass) {
         driver.get("https://www.instagram.com/");
@@ -38,7 +38,7 @@ public class Unfollow {
 
     }
 
-    public int getNumberOfFollowing() {
+    private int getNumberOfFollowing() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li//a//span[text()=' following']/span")));
         return Integer.parseInt(element.getText());
