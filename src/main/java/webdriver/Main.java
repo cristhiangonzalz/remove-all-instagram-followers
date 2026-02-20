@@ -88,6 +88,7 @@ public class Main {
                 unfollow.goToProfile();
                 unfollow.openFollowing(cleanUsername);
                 unfollow.unfollow();
+
             } else {
                 RemoveFollowers removeFollowers = new RemoveFollowers();
                 unfollow.login(cleanUsername, passwordText.getText().trim());
